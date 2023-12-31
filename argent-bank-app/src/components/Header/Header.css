@@ -1,0 +1,27 @@
+.Header__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+}
+
+.Header__nav__logo {
+  width: 200px;
+}
+
+.Header__nav__menu {
+  padding-right: 15px;
+  font-weight: bold;
+  display: flex;
+  gap: 2rem;
+}
+
+.Header__nav__menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.Header__nav a:hover {
+  text-decoration: underline;
+}

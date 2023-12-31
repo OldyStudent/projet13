@@ -1,0 +1,98 @@
+.Profile {
+  background: var(--color-gray--medium);
+  text-align: center;
+  padding: 50px;
+}
+
+.Profile__edit-name-btn {
+  border-color: var(--color-jade);
+  background-color: var(--color-jade);
+  color: white;
+  font-weight: bold;
+  padding: 0.4rem 0.625rem;
+  margin: 1rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  font-size: 0;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.Profile input {
+  border: 2px solid var(--color-gray--dark);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  color: var(--color-gray--dark);
+  font-weight: bold;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.Profile__form-button {
+  border: 2px solid var(--color-purple);
+  border-radius: 4px;
+  color: var(--color-purple);
+  padding: 0.5rem 2rem;
+  margin: 0;
+  width: 7.5rem;
+}
+
+.Profile__transactions {
+  margin-top: 3rem;
+}
+
+.transaction-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid var(--color-gray--dark);
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.account-amount {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.account-title {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.transaction-button {
+  width: 200px;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: var(--color-jade);
+  background-color: var(--color-jade);
+  color: white;
+}
+
+
+@media (max-width: 720px) {
+  .transaction-container {
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+  }
+
+  .transaction-container > div {
+    width: 100%;
+  }
+
+  .transaction-button {
+    width: 100%;
+  }
+
+}

@@ -1,0 +1,66 @@
+.Signin {
+  background: var(--color-gray--medium);
+}
+
+.sign-in-content {
+  background-color: white;
+  width: 350px;
+  margin: 50px auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.Signin__title {
+  margin-block: 0.25rem 1rem;
+}
+
+.input-remember {
+  display: flex;
+}
+
+.Signin__button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: var(--color-jade);
+  background-color: var(--color-jade);
+  color: #fff;
+}
+
+.Signin label {
+  font-weight: bold;
+}
+
+.Signin input {
+  padding: 5px;
+  font-size: 1.2rem;
+}
+
+.input-remember label {
+  margin-left: 0.25rem;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  background: red;
+  color: white;
+  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.Signin__button:disabled {
+  color: #414b48;
+  border-style: inset;
+}

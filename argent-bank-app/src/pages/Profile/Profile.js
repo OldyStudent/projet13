@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { userService } from "../../api/userService";
 import { updateUser } from "../../store/slices/userSlice";
+import { Account } from "../../components";
+import { userAccounts } from "../../api/data/user-accounts";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -18,7 +20,7 @@ export default function Profile() {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(initialUserName);
 
-  // Function to handle form input changes
+  /** handle form input changes */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -28,7 +30,7 @@ export default function Profile() {
     });
   };
 
-  // Function to handle form submission
+  /** handle form submission */
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -69,14 +71,14 @@ export default function Profile() {
             <form onSubmit={handleSubmit}>
               <div className="container">
                 <input
-                  type="text"
+                  type="description"
                   name="firstName"
                   placeholder="First name"
                   value={formData.firstName}
                   onChange={handleInputChange}
                 />
                 <input
-                  type="text"
+                  type="description"
                   name="lastName"
                   placeholder="Last name"
                   value={formData.lastName}
@@ -101,38 +103,15 @@ export default function Profile() {
       </section>
 
       <section className="Profile__transactions">
-        <article className="transaction-container">
-          <div>
-            <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-            <p className="account-amount">$2,082.79</p>
-            <p className="account-amount-description">Available Balance</p>
-          </div>
-          <div>
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </article>
-
-        <article className="transaction-container">
-          <div>
-            <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-            <p className="account-amount">$10,928.42</p>
-            <p className="account-amount-description">Available Balance</p>
-          </div>
-          <div>
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </article>
-
-        <article className="transaction-container">
-          <div>
-            <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-            <p className="account-amount">$184.30</p>
-            <p className="account-amount-description">Current Balance</p>
-          </div>
-          <div>
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </article>
+        {userAccounts.map((account) => (
+          <Account
+            key={account.id}
+            title={account.title}
+            currency={account.currency}
+            amount={account.amount}
+            description={account.description}
+          />
+        ))}
       </section>
     </main>
   );

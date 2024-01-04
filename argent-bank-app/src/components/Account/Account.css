@@ -1,0 +1,49 @@
+.Account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid var(--color-gray--dark);
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.Account__amount {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.Account__title {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.Account__transactions-button {
+  width: 200px;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: var(--color-jade);
+  background-color: var(--color-jade);
+  color: white;
+}
+
+@media (max-width: 720px) {
+  .Account {
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+  }
+
+  .Account > div {
+    width: 100%;
+  }
+
+  .Account__transactions-button {
+    width: 100%;
+  }
+}

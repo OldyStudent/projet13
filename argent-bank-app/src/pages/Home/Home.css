@@ -31,25 +31,7 @@
   display: flex;
 }
 
-.feature-item {
-  flex: 1;
-  padding: 2.5rem;
-  text-align: center;
-}
 
-.feature-icon {
-  width: 150px;
-  border: 10px solid var(--color-jade);
-  border-radius: 50%;
-  padding: 1rem;
-  margin-bottom: 2rem;
-}
-
-.feature-item-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
 
 
 @media (max-width: 920px) {

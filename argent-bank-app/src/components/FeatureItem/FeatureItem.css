@@ -1,0 +1,19 @@
+.FeatureItem {
+    flex: 1;
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.FeatureItem__icon {
+    width: 150px;
+    border: 10px solid var(--color-jade);
+    border-radius: 50%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.FeatureItem__title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}

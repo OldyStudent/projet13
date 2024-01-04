@@ -8,7 +8,6 @@ import "./FeatureItem.css";
  * @param {string} description: The description of the feature
  * @returns {JSX.Element}: The JSX element representing the FeatureItem component
  */
-
 export default function FeatureItem({ image, altText, title, description }) {
   return (
     <div className="FeatureItem">

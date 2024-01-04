@@ -1,6 +1,6 @@
 import "./Home.css";
 import { FeatureItem } from "../../components";
-import { featureList } from "../../api/data/data";
+import { featureList } from "../../api/data/bank-features";
 
 export default function Home() {
   return (

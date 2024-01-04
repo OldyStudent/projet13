@@ -1,16 +1,17 @@
 import "./Header.css";
 
+import imgLogo from "../../assets/images/argent-bank-logo.png";
+import { faUserCircle, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/slices/userSlice";
-import { Link, NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle, faSignOut } from "@fortawesome/free-solid-svg-icons";
-import imgLogo from "../../assets/images/argent-bank-logo.png";
+import { NavButton } from "../index";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+  /** Handles user logout. */
   const handleLogout = () => {
     localStorage.removeItem("token");
     dispatch(logoutUser());
@@ -32,24 +33,25 @@ export default function Header() {
           {user ? (
             <>
               <li>
-                <NavLink to="/profile">
-                  <FontAwesomeIcon icon={faUserCircle} size="lg" />
-                  {user.firstName}
-                </NavLink>
+                <NavButton
+                  to="/profile"
+                  icon={faUserCircle}
+                  label={user.firstName}
+                />
               </li>
 
               <li>
-                <NavLink onClick={handleLogout} to="/">
-                  <FontAwesomeIcon icon={faSignOut} size="lg" />
-                  Sign out
-                </NavLink>
+                <NavButton
+                  to="/"
+                  icon={faSignOut}
+                  label="Sign out"
+                  onClick={handleLogout}
+                />
               </li>
             </>
           ) : (
             <li>
-              <NavLink to="/login">
-                <FontAwesomeIcon icon={faUserCircle} size="lg" /> Sign in
-              </NavLink>
+              <NavButton to="/login" icon={faUserCircle} label="Sign in" />
             </li>
           )}
         </ul>

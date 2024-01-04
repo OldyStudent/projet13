@@ -15,13 +15,3 @@
   display: flex;
   gap: 2rem;
 }
-
-.Header__nav__menu a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.Header__nav a:hover {
-  text-decoration: underline;
-}

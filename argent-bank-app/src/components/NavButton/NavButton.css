@@ -1,0 +1,9 @@
+.NavButton a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.NavButton a:hover {
+  text-decoration: underline;
+}

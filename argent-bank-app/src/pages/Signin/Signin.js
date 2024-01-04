@@ -1,11 +1,15 @@
 import "./Signin.css";
 import { useState } from "react";
-import { userService } from "../../api/userService";
 import { SignInForm } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../store/slices/userSlice";
+import { loginThunk } from "../../store/thunks/loginThunk";
 
+/**
+ * Sign-in Page component.
+ * It allows users to log in using their username and password
+ * @returns {JSX.Element}: The JSX element representing the SignIn component
+ */
 export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -13,6 +17,11 @@ export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  /**
+   * Handles the login process when the user submits the login form
+   * @param {string} username: The given username
+   * @param {string} password: The given password
+   */
   const handleLogin = async (username, password) => {
     setError("");
     setIsLoading(true);
@@ -23,16 +32,13 @@ export default function Signin() {
       return;
     }
 
-    try {
-      const loginData = await userService.login(username, password);
-      localStorage.setItem("token", loginData.token);
-      const userData = await userService.getUserProfile();
-      dispatch(setUser(userData));
+    const errorMessage = await dispatch(loginThunk(username, password));
+    setIsLoading(false);
+
+    if (errorMessage) {
+      setError(errorMessage);
+    } else {
       navigate("/profile");
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 

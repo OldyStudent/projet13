@@ -14,8 +14,8 @@ export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   /**
    * Handles the login process when the user submits the login form
@@ -47,7 +47,7 @@ export default function Signin() {
       <SignInForm
         handleLogin={handleLogin}
         isLoading={isLoading}
-        error={error}
+        errorMessage={error}
       />
     </main>
   );

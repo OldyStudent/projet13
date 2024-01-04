@@ -17,19 +17,7 @@ const login = async (email, password) => {
     });
     return response.data.body;
   } catch (error) {
-    const status = error.response?.status;
-    switch (status) {
-      case 400:
-        throw new Error("Erreur : identifiants incorrects.");
-      case 500:
-        throw new Error(
-          "Erreur interne du serveur, veuillez réessayer plus tard.",
-        );
-      default:
-        throw new Error(
-          "Une erreur inconnue s’est produite. Veuillez réessayer plus tard",
-        );
-    }
+    handleErrorResponse(error);
   }
 };
 
@@ -54,22 +42,7 @@ const getUserProfile = async () => {
 
     return response.data.body;
   } catch (error) {
-    const status = error.response?.status;
-    switch (status) {
-      case 400:
-        throw new Error("Erreur : Token manquant.");
-      case 401:
-        localStorage.removeItem("token");
-        throw new Error("Erreur : Token invalide");
-      case 500:
-        throw new Error(
-          "Erreur interne du serveur, veuillez réessayer plus tard.",
-        );
-      default:
-        throw new Error(
-          "Problème de connexion réseau. Veuillez réessayer plus tard",
-        );
-    }
+    handleErrorResponse(error);
   }
 };
 
@@ -99,19 +72,33 @@ const updateUserProfile = async (firstName, lastName) => {
     );
     return response.data.body;
   } catch (error) {
-    const status = error.response?.status;
-    switch (status) {
-      case 400:
-        throw new Error("Erreur : Token invalide ou manquant.");
-      case 500:
-        throw new Error(
-          "Erreur interne du serveur, veuillez réessayer plus tard.",
-        );
-      default:
-        throw new Error(
-          "Problème de connexion réseau. Veuillez réessayer plus tard",
-        );
-    }
+    handleErrorResponse(error);
+  }
+};
+
+/**
+ * Handles HTTP response errors by throwing a new one with a custom message
+ * @param {AxiosError} error: The error object received from the HTTP response.
+ * @throws {Error}: Throws a new Error with a message based on the HTTP status code.
+ */
+const handleErrorResponse = (error) => {
+  const status = error.response?.status;
+
+  switch (status) {
+    case 400:
+      throw new Error("Veuillez vérifier vos informations et réessayer.");
+    case 401:
+      throw new Error("Accès refusé. Veuillez vous connecter.");
+    case 403:
+      throw new Error("Accès interdit. Permissions insuffisantes.");
+    case 500:
+      throw new Error(
+        "Erreur interne du serveur, veuillez réessayer plus tard.",
+      );
+    default:
+      throw new Error(
+        "Problème de connexion réseau. Veuillez réessayer plus tard.",
+      );
   }
 };
 

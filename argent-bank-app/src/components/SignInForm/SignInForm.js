@@ -5,13 +5,12 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * SignIn Form Component
- * @param {function} handleLogin: Function to handle the login when the form is submitted
+ * @param {Function} handleLogin Function to handle the login when the form is submitted
  * @param {boolean} isLoading: Indicates if a connection request is in progress
- * @param {string} error: The error message to display if a problem occurs
+ * @param {string} errorMessage: The error message to display if a problem occurs
  * @returns {JSX.Element}: The JSX element representing the SignInForm component
  */
-
-export default function SignInForm({ handleLogin, isLoading, error }) {
+export default function SignInForm({ handleLogin, isLoading, errorMessage }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,7 +28,9 @@ export default function SignInForm({ handleLogin, isLoading, error }) {
       <FontAwesomeIcon icon={faUserCircle} size="xl" />
       <h1 className="SignInForm__title">Sign in</h1>
 
-      {error && <div className="SignInForm__error-message">{error}</div>}
+      {errorMessage && (
+        <div className="SignInForm__error-message">{errorMessage}</div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div className="SignInForm__input-wrapper">

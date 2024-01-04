@@ -6,20 +6,22 @@ import { useState } from "react";
  * @param {Object} initialUserData: The initial user data for the form
  * @param {function} onSubmit: Function to handle form submission.
  * @param {function} onCancel: Function to handle form cancelation.
+ * @param {string} errorMessage: The error message to display if a problem occurs
  * @returns {JSX.Element}: The JSX element representing the ProfileForm component
  */
-export default function ProfileForm({ initialUserData, onSubmit, onCancel }) {
+export default function ProfileForm({
+  initialUserData,
+  onSubmit,
+  onCancel,
+  errorMessage,
+}) {
   // Initialize form input state
   const [formData, setFormData] = useState(initialUserData);
 
   /** Handle form input changes */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   /** Handle form submission */
@@ -36,6 +38,9 @@ export default function ProfileForm({ initialUserData, onSubmit, onCancel }) {
 
   return (
     <div className="ProfileForm">
+      {errorMessage && (
+        <div className="ProfileForm__error-message">{errorMessage}</div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="ProfileForm__container">
           <input

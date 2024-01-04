@@ -1,0 +1,27 @@
+.ProfileForm__container {
+  display: flex;
+  justify-content: center;
+  font-size: 0;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.ProfileForm input {
+  border: 2px solid var(--color-gray--dark);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  color: var(--color-gray--dark);
+  font-weight: bold;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.ProfileForm__button {
+  border: 2px solid var(--color-purple);
+  border-radius: 4px;
+  color: var(--color-purple);
+  padding: 0.5rem 2rem;
+  margin: 0;
+  width: 7.5rem;
+}

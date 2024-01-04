@@ -1,38 +1,25 @@
 import "./Profile.css";
 
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { userService } from "../../api/userService";
+import { Account, ProfileForm } from "../../components";
 import { updateUser } from "../../store/slices/userSlice";
-import { Account } from "../../components";
+import { userService } from "../../api/userService";
 import { userAccounts } from "../../api/data/user-accounts";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+
+  const [editMode, setEditMode] = useState(false);
 
   const initialUserName = {
     firstName: user.firstName,
     lastName: user.lastName,
   };
 
-  // Initialize form input state
-  const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState(initialUserName);
-
-  /** handle form input changes */
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  /** handle form submission */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  /** Handle form submission */
+  const handleSubmit = async (formData) => {
     try {
       await userService.updateUserProfile(
         formData.firstName,
@@ -45,11 +32,6 @@ export default function Profile() {
       console.log("Erreur lors de l'envoi des données", error);
     }
   };
-
-  function handleCancelClick() {
-    setFormData(initialUserName);
-    setEditMode(false);
-  }
 
   return (
     <main className="Profile">
@@ -68,36 +50,11 @@ export default function Profile() {
           </button>
         ) : (
           <div>
-            <form onSubmit={handleSubmit}>
-              <div className="container">
-                <input
-                  type="description"
-                  name="firstName"
-                  placeholder="First name"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="description"
-                  name="lastName"
-                  placeholder="Last name"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="container">
-                <button type="submit" className="Profile__form-button">
-                  Save
-                </button>
-                <button
-                  type="button"
-                  className="Profile__form-button"
-                  onClick={handleCancelClick}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+            <ProfileForm
+              onSubmit={handleSubmit}
+              onCancel={() => setEditMode(false)}
+              initialUserData={initialUserName}
+            />
           </div>
         )}
       </section>

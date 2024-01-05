@@ -22,7 +22,9 @@ export default function Profile() {
   };
 
   /** Handles the submission of the edit name form
-   * @param {Object} formData: Data from the profile edit form.
+   * @param {Object} formData: Data to update in the user profile.
+   * @param {string} formData.firstName: User first name.
+   * @param {string} formData.lastName: User last name.
    */
   const handleEditNameSubmit = async (formData) => {
     const errorMessage = await dispatch(updateUserProfileThunk(formData));

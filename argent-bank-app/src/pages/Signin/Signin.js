@@ -35,11 +35,7 @@ export default function Signin() {
     const errorMessage = await dispatch(loginThunk(username, password));
     setIsLoading(false);
 
-    if (errorMessage) {
-      setError(errorMessage);
-    } else {
-      navigate("/profile");
-    }
+    errorMessage ? setError(errorMessage) : navigate("/profile");
   };
 
   return (

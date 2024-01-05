@@ -30,7 +30,7 @@ export default function Header() {
         </Link>
 
         <ul className="Header__nav__menu">
-          {user ? (
+          {user.id ? (
             <>
               <li>
                 <NavButton

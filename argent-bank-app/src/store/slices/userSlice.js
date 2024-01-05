@@ -1,22 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = null;
+/**
+ * Initial state for the user slice
+ */
+const initialState = {
+  id: null,
+  email: "",
+  firstName: "",
+  lastName: "",
+  createdAt: null,
+  updatedAt: null,
+};
 
+/**
+ * Slice for handling user authentication and data state update
+ */
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     setUser: (state, action) => {
-      return action.payload;
+      return { ...state, ...action.payload };
     },
 
     updateUser: (state, action) => {
       return { ...state, ...action.payload };
     },
 
-    logoutUser: (state, action) => {
-      return null;
-    },
+    logoutUser: () => initialState,
   },
 });
 

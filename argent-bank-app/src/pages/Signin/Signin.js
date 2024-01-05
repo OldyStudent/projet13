@@ -1,9 +1,12 @@
 import "./Signin.css";
-import { useState } from "react";
 import { SignInForm } from "../../components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { loginThunk } from "../../store/thunks/loginThunk";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginThunk,
+  USER_LOGIN_FULFILLED,
+} from "../../store/thunks/loginThunk";
+import { setError } from "../../store/slices/userSlice";
 
 /**
  * Sign-in Page component.
@@ -14,8 +17,7 @@ export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, error } = useSelector((state) => state.user);
 
   /**
    * Handles the login process when the user submits the login form
@@ -23,19 +25,16 @@ export default function Signin() {
    * @param {string} password: The given password
    */
   const handleLogin = async (username, password) => {
-    setError("");
-    setIsLoading(true);
-
     if (!username || !password) {
       setError("Veuillez renseigner tous les champs.");
-      setIsLoading(false);
       return;
     }
 
-    const errorMessage = await dispatch(loginThunk(username, password));
-    setIsLoading(false);
+    const action = await dispatch(loginThunk({ username, password }));
 
-    errorMessage ? setError(errorMessage) : navigate("/profile");
+    if (action.type === USER_LOGIN_FULFILLED) {
+      navigate("/profile");
+    }
   };
 
   return (

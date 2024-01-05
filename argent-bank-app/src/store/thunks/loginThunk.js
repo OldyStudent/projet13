@@ -1,26 +1,27 @@
 import { userService } from "../../api/userService";
-import { setUser } from "../slices/userSlice";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 /**
  * Thunk action for handling user login.
  *
  * @async
- * @function
- * @param {string} username - Username for the login.
- * @param {string} password - Password for the login.
- * @returns {Promise<string|undefined>} Returns a promise that resolves to:
- *   - `undefined` on a successful login.
- *   - An error message string if the login fails.
+ * @function loginThunk
+ * @param {Object} arg - The arguments object.
+ * @param {string} arg.username - Username for the login.
+ * @param {string} arg.password - Password for the login.
+ * @returns {Promise<Object|RejectedValue>} A promise that resolves with the user profile data if success, or error if rejected
  */
-export const loginThunk = (username, password) => {
-  return async (dispatch) => {
+export const loginThunk = createAsyncThunk(
+  "user/login",
+  async ({ username, password }, { rejectWithValue }) => {
     try {
       const loginData = await userService.login(username, password);
       localStorage.setItem("token", loginData.token);
-      const userData = await userService.getUserProfile();
-      dispatch(setUser(userData));
+      return await userService.getUserProfile();
     } catch (error) {
-      return error.message;
+      return rejectWithValue(error.message);
     }
-  };
-};
+  },
+);
+
+export const USER_LOGIN_FULFILLED = "user/login/fulfilled";

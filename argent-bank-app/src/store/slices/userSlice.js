@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loginThunk } from "../thunks/loginThunk";
 import { updateUserProfileThunk } from "../thunks/updateUserThunk";
 
-/**
- * Initial state for the user slice
- */
+/** Initial state for the user slice */
 const initialState = {
   id: null,
   email: "",
@@ -15,18 +14,12 @@ const initialState = {
   error: null,
 };
 
-/**
- * Slice for handling user authentication and data state update
- */
+/** Slice for handling user authentication and data state update */
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     setUser: (state, action) => {
-      return { ...state, ...action.payload };
-    },
-
-    updateUser: (state, action) => {
       return { ...state, ...action.payload };
     },
 
@@ -36,21 +29,31 @@ const userSlice = createSlice({
       state.error = action.payload;
     },
   },
+
   extraReducers: (builder) => {
-    builder
-      .addCase(updateUserProfileThunk.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(updateUserProfileThunk.fulfilled, (state, action) => {
-        return { ...state, ...action.payload, isLoading: false, error: null };
-      })
-      .addCase(updateUserProfileThunk.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      });
+    handleAsyncThunk(builder, loginThunk);
+    handleAsyncThunk(builder, updateUserProfileThunk);
   },
 });
 
 export const { setUser, updateUser, logoutUser, setError } = userSlice.actions;
 export default userSlice.reducer;
+
+// Private functions
+const handleAsyncThunk = (builder, thunk) => {
+  builder
+    .addCase(thunk.pending, (state) => {
+      updateLoadingAndErrorState(state, null, true);
+    })
+    .addCase(thunk.fulfilled, (state, action) => {
+      return { ...state, ...action.payload, isLoading: false, error: null };
+    })
+    .addCase(thunk.rejected, (state, action) => {
+      updateLoadingAndErrorState(state, action.payload, false);
+    });
+};
+
+const updateLoadingAndErrorState = (state, error, isLoading) => {
+  state.isLoading = isLoading;
+  state.error = error;
+};

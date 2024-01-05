@@ -13,12 +13,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
  */
 export const updateUserProfileThunk = createAsyncThunk(
   "user/updateUserProfile",
-  async (formData, { rejectWithValue }) => {
+  async ({ firstName, lastName }, { rejectWithValue }) => {
     try {
-      return await userService.updateUserProfile(
-        formData.firstName,
-        formData.lastName,
-      );
+      return await userService.updateUserProfile(firstName, lastName);
     } catch (error) {
       return rejectWithValue(error.message);
     }

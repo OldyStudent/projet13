@@ -6,7 +6,6 @@ import {
   loginThunk,
   USER_LOGIN_FULFILLED,
 } from "../../store/thunks/loginThunk";
-import { setError } from "../../store/slices/userSlice";
 
 /**
  * Sign-in Page component.
@@ -26,12 +25,10 @@ export default function Signin() {
    */
   const handleLogin = async (username, password) => {
     if (!username || !password) {
-      setError("Veuillez renseigner tous les champs.");
       return;
     }
 
     const action = await dispatch(loginThunk({ username, password }));
-
     if (action.type === USER_LOGIN_FULFILLED) {
       navigate("/profile");
     }

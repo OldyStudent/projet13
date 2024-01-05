@@ -21,3 +21,6 @@ export const updateUserProfileThunk = createAsyncThunk(
     }
   },
 );
+
+export const UPADATE_USER_PROFILE_FULFILLED =
+  "user/updateUserProfile/fulfilled";

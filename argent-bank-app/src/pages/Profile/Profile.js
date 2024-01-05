@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { Account, ProfileForm } from "../../components";
 import { userAccounts } from "../../api/data/user-accounts";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUserProfileThunk } from "../../store/thunks/updateUserThunk";
+import {
+  UPADATE_USER_PROFILE_FULFILLED,
+  updateUserProfileThunk,
+} from "../../store/thunks/updateUserThunk";
 import { setError } from "../../store/slices/userSlice";
 
 /**
@@ -20,12 +23,15 @@ export default function Profile() {
   const initialUserName = { firstName, lastName };
 
   /** Handles the submission of the edit name form
-   * @param {Object} formData: Data to update in the user profile.
-   * @param {string} formData.firstName: User first name.
-   * @param {string} formData.lastName: User last name.
+   * @param {Object} formData: Data to update in the user profile
+   * @param {string} formData.firstName: User first name
+   * @param {string} formData.lastName: User last name
    */
   const handleEditNameSubmit = async (formData) => {
-    await dispatch(updateUserProfileThunk(formData));
+    const action = await dispatch(updateUserProfileThunk(formData));
+    if (action.type === UPADATE_USER_PROFILE_FULFILLED) {
+      setEditMode(false);
+    }
   };
 
   /** Toggles the edit mode for the profile form */
@@ -35,12 +41,6 @@ export default function Profile() {
       dispatch(setError(null));
     }
   };
-
-  useEffect(() => {
-    if (!isLoading && !error) {
-      setEditMode(false);
-    }
-  }, [isLoading, error]);
 
   return (
     <main className="Profile">

@@ -141,7 +141,11 @@ paths:
           schema:
             $ref: '#/definitions/AccountsResponse'
         '400':
-          description: Invalid Fields
+          description: Bad Request - Invalid Parameters
+        '401':
+          description: Unauthorized - Invalid or Missing Authorization Token
+        '403':
+          description: Forbidden - Access Denied
         '500':
           description: Internal Server Error
 
@@ -172,11 +176,59 @@ paths:
           schema:
             $ref: '#/definitions/TransactionsResponse'
         '400':
-          description: Invalid Fields
+          description: Bad Request - Invalid Parameters
+        '401':
+          description: Unauthorized - Invalid or Missing Authorization Token
+        '403':
+          description: Forbidden - Access Denied
+        '404':
+          description: Not Found - Account Not Found
         '500':
           description: Internal Server Error
 
   /user/accounts/{accountid}/transactions/{transactionid}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Accounts Module
+      summary: Retrieve a specific transaction
+      description: API for retrieving details of a specific transaction
+      parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - in: path
+          type: string
+          name: accountid
+          description: Account ID
+          required: true
+        - in: path
+          type: string
+          name: transactionid
+          description: Transaction ID
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          schema: 
+            $ref: '#/definitions/TransactionUpdatedResponse'
+        '400':
+          description: Bad Request - Invalid Parameters
+        '401':
+          description: Unauthorized - Invalid or Missing Authorization Token
+        '403':
+          description: Forbidden - Access Denied
+        '404':
+          description: Not Found - Transaction Not Found
+        '500':
+          description: Internal Server Error
+          
+
     put:
       security:
         - Bearer: []
@@ -214,7 +266,13 @@ paths:
           schema:
             $ref: '#/definitions/TransactionUpdatedResponse'
         '400':
-          description: Invalid Fields
+          description: Invalid Fields - Incorrect or Missing Fields in Request Body
+        '401':
+          description: Unauthorized - Invalid or Missing Authorization Token
+        '403':
+          description: Forbidden - Access Denied
+        '404':
+          description: Not Found - Transaction or Account Not Found
         '500':
           description: Internal Server Error
 

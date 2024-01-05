@@ -11,24 +11,24 @@ import { PersistGate } from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Signin />} />
+  // <React.StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Signin />} />
 
-            <Route element={<ProtectedRoute fallbackPath="/login" />}>
-              <Route path="/profile" element={<Profile />} />
-            </Route>
+          <Route element={<ProtectedRoute fallbackPath="/login" />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
 
-            <Route path="*" element={<Home />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+          <Route path="*" element={<Home />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </PersistGate>
+  </Provider>,
+  // </React.StrictMode>,
 );

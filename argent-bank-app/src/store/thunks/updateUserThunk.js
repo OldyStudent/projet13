@@ -1,27 +1,26 @@
 import { userService } from "../../api/userService";
-import { updateUser } from "../slices/userSlice";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 /**
  * Thunk action for updating the user profile.
  *
  * @async
- * @function
- * @param {Object} formData: Data to update in the user profile.
- * @param {string} formData.firstName: User's first name.
- * @param {string} formData.lastName: User's last name.
- * @returns {Promise<string|undefined>}: A promise that resolves with an error message
- * if the update fails, or resolves with undefined if the update is successful.
+ * @function updateUserProfileThunk
+ * @param {Object} formData: Data to update in the user profile
+ * @param {string} formData.firstName: User first name
+ * @param {string} formData.lastName: User last name
+ * @returns {Promise<Object|RejectedValue>}: A promise that resolves with the updated user data if success, or error if rejected
  */
-export const updateUserProfileThunk = (formData) => {
-  return async (dispatch) => {
+export const updateUserProfileThunk = createAsyncThunk(
+  "user/updateUserProfile",
+  async (formData, { rejectWithValue }) => {
     try {
-      await userService.updateUserProfile(
+      return await userService.updateUserProfile(
         formData.firstName,
         formData.lastName,
       );
-      dispatch(updateUser(formData));
     } catch (error) {
-      return error.message;
+      return rejectWithValue(error.message);
     }
-  };
-};
+  },
+);

@@ -1,9 +1,10 @@
 import "./Profile.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Account, ProfileForm } from "../../components";
 import { userAccounts } from "../../api/data/user-accounts";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserProfileThunk } from "../../store/thunks/updateUserThunk";
+import { setError } from "../../store/slices/userSlice";
 
 /**
  * Profile Page Component
@@ -11,15 +12,12 @@ import { updateUserProfileThunk } from "../../store/thunks/updateUserThunk";
  */
 export default function Profile() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const { firstName, lastName, error, isLoading } = useSelector(
+    (state) => state.user,
+  );
 
-  const [error, setError] = useState("");
   const [editMode, setEditMode] = useState(false);
-
-  const initialUserName = {
-    firstName: user.firstName,
-    lastName: user.lastName,
-  };
+  const initialUserName = { firstName, lastName };
 
   /** Handles the submission of the edit name form
    * @param {Object} formData: Data to update in the user profile.
@@ -27,22 +25,29 @@ export default function Profile() {
    * @param {string} formData.lastName: User last name.
    */
   const handleEditNameSubmit = async (formData) => {
-    const errorMessage = await dispatch(updateUserProfileThunk(formData));
-    errorMessage ? setError(errorMessage) : toggleEditMode();
+    await dispatch(updateUserProfileThunk(formData));
   };
 
   /** Toggles the edit mode for the profile form */
   const toggleEditMode = () => {
     setEditMode(!editMode);
-    setError("");
+    if (error) {
+      dispatch(setError(null));
+    }
   };
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      setEditMode(false);
+    }
+  }, [isLoading, error]);
 
   return (
     <main className="Profile">
       <section>
         <h2>
           Welcome back <br />
-          {user.firstName} {user.lastName} !
+          {firstName} {lastName}!
         </h2>
 
         {!editMode ? (
@@ -56,6 +61,7 @@ export default function Profile() {
               onCancel={toggleEditMode}
               initialUserData={initialUserName}
               errorMessage={error}
+              isLoading={isLoading}
             />
           </div>
         )}

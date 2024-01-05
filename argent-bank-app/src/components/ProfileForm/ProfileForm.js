@@ -14,6 +14,7 @@ export default function ProfileForm({
   onSubmit,
   onCancel,
   errorMessage,
+  isLoading,
 }) {
   // Initialize form input state
   const [formData, setFormData] = useState(initialUserData);
@@ -49,6 +50,7 @@ export default function ProfileForm({
             placeholder="First name"
             value={formData.firstName}
             onChange={handleInputChange}
+            disabled={isLoading}
           />
           <input
             type="description"
@@ -56,17 +58,23 @@ export default function ProfileForm({
             placeholder="Last name"
             value={formData.lastName}
             onChange={handleInputChange}
+            disabled={isLoading}
           />
         </div>
 
         <div className="ProfileForm__container">
-          <button type="submit" className="ProfileForm__button">
+          <button
+            type="submit"
+            className="ProfileForm__button"
+            disabled={isLoading}
+          >
             Save
           </button>
           <button
             type="button"
             className="ProfileForm__button"
             onClick={handleCancelClick}
+            disabled={isLoading}
           >
             Cancel
           </button>

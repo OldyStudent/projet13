@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { updateUserProfileThunk } from "../thunks/updateUserThunk";
 
 /**
  * Initial state for the user slice
@@ -10,6 +11,8 @@ const initialState = {
   lastName: "",
   createdAt: null,
   updatedAt: null,
+  isLoading: false,
+  error: null,
 };
 
 /**
@@ -28,8 +31,26 @@ const userSlice = createSlice({
     },
 
     logoutUser: () => initialState,
+
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateUserProfileThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateUserProfileThunk.fulfilled, (state, action) => {
+        return { ...state, ...action.payload, isLoading: false, error: null };
+      })
+      .addCase(updateUserProfileThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 
-export const { setUser, updateUser, logoutUser } = userSlice.actions;
+export const { setUser, updateUser, logoutUser, setError } = userSlice.actions;
 export default userSlice.reducer;
